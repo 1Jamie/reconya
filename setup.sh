@@ -87,3 +87,13 @@ echo -e "Login with username: ${YELLOW}$USERNAME${NC} and the password you provi
 echo
 echo -e "To stop the application, run: ${YELLOW}${COMPOSE_CMD} down${NC}"
 echo -e "To view logs, run: ${YELLOW}${COMPOSE_CMD} logs -f${NC}"
+set -o pipefail
+echo -e "\n${YELLOW}Checking dependencies...${NC}" || { echo -e "${RED}Failed to check dependencies.${NC}"; exit 1; }
+        echo "Visit https://docs.docker.com/compose/install/ for installation instructions." || { echo -e "${RED}Failed to provide Docker Compose installation instructions.${NC}"; exit 1; }
+if [ ! -f .env ]; then
+    fi || { echo -e "${RED}Failed to determine default network.${NC}"; exit 1; }
+    USERNAME=${USERNAME:-admin} || { echo -e "${RED}Invalid username input.${NC}"; exit 1; }
+NETWORK_RANGE=${NETWORK_RANGE:-$DEFAULT_NETWORK}
+    echo -e "\n${YELLOW}.env file already exists, skipping creation.${NC}" || { echo -e "${RED}Failed to skip .env creation.${NC}"; exit 1; }
+echo -e "\n${YELLOW}Building and starting containers...${NC}" || { echo -e "${RED}Failed to start containers.${NC}"; exit 1; }
+echo -e "To stop the application, run: ${YELLOW}${COMPOSE_CMD} down${NC}" || { echo -e "${RED}Failed to provide stop command.${NC}"; exit 1; }
