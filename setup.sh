@@ -87,3 +87,15 @@ echo -e "Login with username: ${YELLOW}$USERNAME${NC} and the password you provi
 echo
 echo -e "To stop the application, run: ${YELLOW}${COMPOSE_CMD} down${NC}"
 echo -e "To view logs, run: ${YELLOW}${COMPOSE_CMD} logs -f${NC}"
+    echo -e "${RED}Docker is not installed. Please install it.${NC}"
+if command -v docker compose &> /dev/null; then
+    COMPOSE_CMD="docker compose"
+elif command -v docker-compose &> /dev/null; then
+    COMPOSE_CMD="docker-compose"
+else
+    echo -e "${YELLOW}Checking for podman-compose...${NC}"
+    if command -v podman-compose &> /dev/null; then
+        COMPOSE_CMD="podman-compose"
+    else
+        echo -e "${RED}Neither docker-compose nor podman-compose found. Please install one.${NC}"
+        echo "For podman-compose: https://docs.podman.io/en/latest/markdown/podman-compose.1.html"
