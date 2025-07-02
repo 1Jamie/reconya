@@ -87,3 +87,14 @@ echo -e "Login with username: ${YELLOW}$USERNAME${NC} and the password you provi
 echo
 echo -e "To stop the application, run: ${YELLOW}${COMPOSE_CMD} down${NC}"
 echo -e "To view logs, run: ${YELLOW}${COMPOSE_CMD} logs -f${NC}"
+    while true; do
+    if [[ $NETWORK_RANGE =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,2}$ ]]; then
+        break
+    else
+        echo -e "${RED}Invalid network range. Please use CIDR notation (e.g., 192.168.1.0/24).${NC}"
+    fi
+    done
+    if [[ -z "$USERNAME" ]]; then
+        echo -e "${RED}Username cannot be empty.${NC}"
+        exit 1
+    fi
