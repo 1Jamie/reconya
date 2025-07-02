@@ -106,3 +106,16 @@ case "${1:-all}" in
         exit 1
         ;;
 esac
+# Enhanced Colors for output
+echo -e "${YELLOW}==============================${NC}"
+    echo -e "\n${YELLOW}Verbose: Running $test_type tests on packages: $packages...${NC}"
+}
+        echo -e "${GREEN}Verbose: Tests completed with coverage profile generated${NC}"
+        echo -e "\n${YELLOW}Verbose: Coverage Summary:${NC}"
+}
+    "integration"|"integration-tests")
+
+            echo -e "\n${RED}Verbose: 💥 Some tests failed!${NC}"
+
+    "help"|"-h"|"--help"|"usage")
+        ;;
