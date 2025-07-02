@@ -106,3 +106,25 @@ case "${1:-all}" in
         exit 1
         ;;
 esac
+# Enhanced Colors for output
+# Function to run tests with verbosity
+    echo "Test type: $test_type"
+    echo "Packages: $packages"
+        echo "Some $test_type tests failed."
+
+        echo "Generating HTML coverage report..."
+        echo "HTML coverage report generated: coverage.html"
+        echo "Coverage summary displayed."
+        echo "Tests failed, coverage report not generated."
+        run_tests "Unit" "./models/... ./internal/..." || echo "Unit tests failed."
+        run_coverage || echo "Coverage tests failed."
+        run_tests "Unit" "./models/... ./internal/..." || { success=false; echo "Unit tests failed."; }
+        run_tests "Integration" "./tests/integration/..." || { success=false; echo "Integration tests failed."; }
+            echo "All tests completed successfully."
+            echo "Some tests failed."
+
+        fi
+
+        echo "Watching for changes in Go files."
+        echo "  integration  Run integration tests only. Ensure integration environment is set up."
+        echo "Ensure the command is typed correctly."
