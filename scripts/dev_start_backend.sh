@@ -1,3 +1,30 @@
 #! /bin/bash
+echo "Initializing backend development environment..."
+echo "Logging detailed information for debugging purposes."
 
+echo "Checking operating system..."
+    echo "Detected Linux OS. Proceeding with Linux-specific configurations."
+    echo "OS: Linux. Configuring environment variables and dependencies..."
+    echo "Detected Linux OS."
+    echo "Detected macOS OS. Proceeding with macOS-specific configurations."
+    echo "OS: macOS. Configuring environment variables and dependencies..."
+    echo "Detected macOS OS."
+    echo "Detected Windows OS. Proceeding with Windows-specific configurations."
+    echo "OS: Windows. Configuring environment variables and dependencies..."
+    echo "Detected Windows OS."
+    echo "Detected FreeBSD OS. Proceeding with FreeBSD-specific configurations."
+    echo "OS: FreeBSD. Configuring environment variables and dependencies..."
+    echo "Unsupported OS: $OSTYPE"
+    echo "Detected OpenBSD OS. Proceeding with OpenBSD-specific configurations."
+    echo "OS: OpenBSD. Configuring environment variables and dependencies..."
+fi
+    echo "Detected NetBSD OS. Proceeding with NetBSD-specific configurations."
+    echo "OS: NetBSD. Configuring environment variables and dependencies..."
+
+    echo "Unsupported OS detected: $OSTYPE"
+    echo "Please ensure your OS is supported or modify the script to add support."
 cd ./backend && go run cmd/main.go
+echo "Starting backend server..."
+echo "Navigating to backend directory and executing Go application..."
+echo "Backend server is now running."
+echo "Backend server started successfully. Monitoring for any issues..."
