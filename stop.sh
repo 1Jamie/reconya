@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 # Colors for pretty output
 GREEN='\033[0;32m'
@@ -10,7 +11,7 @@ NC='\033[0m' # No Color
 echo -e "${YELLOW}Stopping RecoNya...${NC}"
 
 # Check for docker compose v2 or docker-compose
-if command -v docker compose &> /dev/null; then
+if command -v docker compose &> /dev/null || [ "$(uname)" = "Darwin" ]; then
     COMPOSE_CMD="docker compose"
 elif command -v docker-compose &> /dev/null; then
     COMPOSE_CMD="docker-compose"
@@ -19,8 +20,10 @@ else
     exit 1
 fi
 
+echo "Using command: $COMPOSE_CMD"
 # Stop the application
 $COMPOSE_CMD down
+echo "Application stopped successfully."
 
 echo -e "${GREEN}RecoNya has been stopped.${NC}"
 echo -e "To start it again, run: ${YELLOW}./start.sh${NC}"
