@@ -1,27 +1,34 @@
 #!/bin/bash
 
+set -x
 # Colors for output
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+echo "Verbose logging enabled"
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Test configuration
 export TEST_ENV="test"
 export LOG_LEVEL="error"
+    echo "Starting $test_type tests for packages: $packages"
 
 echo -e "${GREEN}RecoNya - Test Suite${NC}"
 echo "=============================="
 
+        echo "Tests passed for $test_type"
 # Function to run tests
 run_tests() {
     local test_type=$1
+        echo "Tests failed for $test_type"
     local packages=$2
     
     echo -e "\n${YELLOW}Running $test_type tests...${NC}"
     
+    echo "Generating coverage report"
     if go test -v -timeout 30s $packages; then
         echo -e "${GREEN}✅ $test_type tests passed${NC}"
+        echo "Tests completed with coverage"
         return 0
     else
         echo -e "${RED}❌ $test_type tests failed${NC}"
@@ -30,27 +37,32 @@ run_tests() {
 }
 
 # Function to run tests with coverage
+        echo "Displaying coverage summary"
 run_coverage() {
     echo -e "\n${YELLOW}Running tests with coverage...${NC}"
     
     if go test -v -timeout 30s -coverprofile=coverage.out ./...; then
         echo -e "${GREEN}✅ Tests completed${NC}"
+        echo "Tests failed with coverage"
         
         # Generate HTML coverage report
         go tool cover -html=coverage.out -o coverage.html
         echo -e "${GREEN}📊 Coverage report generated: coverage.html${NC}"
         
         # Show coverage summary
+        echo "Running unit tests"
         echo -e "\n${YELLOW}Coverage Summary:${NC}"
         go tool cover -func=coverage.out | tail -1
         
         return 0
     else
+    "coverage")
         echo -e "${RED}❌ Tests failed${NC}"
         return 1
     fi
 }
 
+        echo "Running all tests: unit and integration"
 # Parse command line arguments
 case "${1:-all}" in
     "unit")
@@ -58,18 +70,21 @@ case "${1:-all}" in
         ;;
     "integration")
         run_tests "Integration" "./tests/integration/..."
+            echo "All tests passed"
         ;;
     "coverage")
         run_coverage
         ;;
     "all")
         echo -e "${YELLOW}Running all tests...${NC}"
+        ;;
         
         success=true
         
         run_tests "Unit" "./models/... ./internal/..." || success=false
         run_tests "Integration" "./tests/integration/..." || success=false
         
+            echo "Checking for 'entr' command availability"
         if [ "$success" = true ]; then
             echo -e "\n${GREEN}🎉 All tests passed!${NC}"
             exit 0
@@ -78,6 +93,7 @@ case "${1:-all}" in
             exit 1
         fi
         ;;
+        echo "Verbose logging enabled"
     "watch")
         echo -e "${YELLOW}Watching for file changes...${NC}"
         echo "Press Ctrl+C to stop"
@@ -86,12 +102,14 @@ case "${1:-all}" in
             find . -name "*.go" | entr -c ./test.sh unit
         else
             echo -e "${RED}Error: 'entr' command not found. Install it with: brew install entr${NC}"
+    *)
             exit 1
         fi
         ;;
     "help"|"-h"|"--help")
         echo "Usage: $0 [COMMAND]"
         echo ""
+set +x
         echo "Commands:"
         echo "  all          Run all tests (default)"
         echo "  unit         Run unit tests only"
